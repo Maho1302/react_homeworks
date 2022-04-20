@@ -1,25 +1,119 @@
-import logo from './logo.svg';
-import './App.css';
+import {useReducer} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const reducer = (state, action) => {
+    const {type} = action;
+    switch (type) {
+        case 'inc1' :
+            return {...state, counter1: state.counter1 + 1}
+        case 'inc2' :
+            return {...state, counter2: state.counter2 + 1}
+        case 'inc3' :
+            return {...state, counter3: state.counter3 + 1}
+
+        case 'dec1' :
+            return {...state, counter1: state.counter1 - 1}
+        case 'dec2' :
+            return {...state, counter2: state.counter2 - 1}
+        case 'dec3' :
+            return {...state, counter3: state.counter3 - 1}
+
+        case 'reset1' :
+            return {...state, counter1: 0}
+        case 'reset2' :
+            return {...state, counter2: 0}
+        case 'reset3' :
+            return {...state, counter3: 0}
+
+        default :
+            console.error('Щось незрозуміле!');
+            return state;
+    }
+}
+
+const App = () => {
+    const [state, dispatch] = useReducer(reducer, {counter1: 0, counter2: 0, counter3: 0});
+    return (
+        <div>
+            <div>
+                <div>Counter#1: {state.counter1}</div>
+                <button onClick={() => dispatch({type: 'inc1'})}>inc</button>
+                <button onClick={() => dispatch({type: 'dec1'})}>dec</button>
+                <button onClick={() => dispatch({type: 'reset1'})}>reset</button>
+            </div>
+            <hr/>
+            <div>
+                <div>Counter#2: {state.counter2}</div>
+                <button onClick={() => dispatch({type: 'inc2'})}>inc</button>
+                <button onClick={() => dispatch({type: 'dec2'})}>dec</button>
+                <button onClick={() => dispatch({type: 'reset2'})}>reset</button>
+            </div>
+            <hr/>
+            <div>
+                <div>Counter#3: {state.counter3}</div>
+                <button onClick={() => dispatch({type: 'inc3'})}>inc</button>
+                <button onClick={() => dispatch({type: 'dec3'})}>dec</button>
+                <button onClick={() => dispatch({type: 'reset3'})}>reset</button>
+            </div>
+        </div>
+    );
 }
 
 export default App;
+
+// const reducer = (state, action) => {
+//     const { type, payload } = action;
+//
+//     switch (type) {
+//         case 'counter1' :
+//             return { ...state, counter1: state.counter1 + payload }
+//         case 'counter2' :
+//             return { ...state, counter2: state.counter2 + payload }
+//         case 'counter3' :
+//             return { ...state, counter3: state.counter3 + payload }
+//
+//         case 'reset1' :
+//             return { ...state, counter1: 0 }
+//         case 'reset2' :
+//             return { ...state, counter2: 0 }
+//         case 'reset3' :
+//             return { ...state, counter3: 0 }
+//
+//         default :
+//             console.error('невідомий тип!');
+//             return state;
+//     }
+// }
+//
+// const App = () => {
+//     const [state, dispatch] = useReducer(reducer, { counter1: 0, counter2: 0, counter3: 0 });
+//     return (
+//         <div>
+//             <div>
+//                 <div>Counter #1 : {state.counter1}</div>
+//                 <button onClick={() => dispatch({ type: 'counter1', payload: 1 })}>inc</button>
+//                 <button onClick={() => dispatch({ type: 'counter1', payload: -1 })}>dec</button>
+//                 <button onClick={() => dispatch({ type: 'reset1' })}>reset</button>
+//             </div>
+//
+//             <hr/>
+//
+//             <div>
+//                 <div>Counter #2 : {state.counter2}</div>
+//                 <button onClick={() => dispatch({ type: 'counter2', payload: 1 })}>inc</button>
+//                 <button onClick={() => dispatch({ type: 'counter2', payload: -1 })}>dec</button>
+//                 <button onClick={() => dispatch({ type: 'reset2' })}>reset</button>
+//             </div>
+//
+//             <hr/>
+//
+//             <div>
+//                 <div>Counter #3 : {state.counter3}</div>
+//                 <button onClick={() => dispatch({ type: 'counter3', payload: 1 })}>inc</button>
+//                 <button onClick={() => dispatch({ type: 'counter3', payload: -1 })}>dec</button>
+//                 <button onClick={() => dispatch({ type: 'reset3' })}>reset</button>
+//             </div>
+//         </div>
+//     );
+// }
+//
+// export default App;
